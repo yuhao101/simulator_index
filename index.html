@@ -59,72 +59,14 @@
 			</div>
 			<div class="visual_box">
 				<div class="visual_title">
-					<span>Transportation</span>
+					<span>Evaluation Matrics</span>
 					<img src="images/ksh33.png">
 				</div>
-				<div class="visual_chart sfzcll">
-					<a>Transportation</a>
-					<a>passenger</a>
-					<a>carpool passenger</a>
-					<div class="sfzcll_pos_box">
-						<div class="sfzcll_box">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<label><img src="images/ksh35.png">Taxi</label>
-							<div class="sfzcll_smallBk">
-								<div class="ygl">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="sfzcll_smallBk">
-								<div class="ygh">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<div class="sfzcll_box">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<label><img src="images/ksh35.png">Taxi</label>
-							<div class="sfzcll_smallBk">
-								<div class="ygl">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="sfzcll_smallBk">
-								<div class="ygh">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<div class="sfzcll_box">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<img class="sfzcll_bkJk" src="images/ksh34.png">
-							<label><img src="images/ksh35.png">Taxi</label>
-							<div class="sfzcll_smallBk">
-								<div class="ygl">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="sfzcll_smallBk">
-								<div class="ygh">
-									<span>4347.2万</span>人
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					
+				<div class="visual_chart" id="main21">
+
 				</div>
 			</div>
+
 		</div>
 		<div class="visual_con">
 			<div class="visual_conTop">
@@ -266,6 +208,8 @@
 	//交通工具流量
 	var myChart2 = echarts.init(document.getElementById('main2'));
     myChart2.setOption(option2);
+    var myChart2 = echarts.init(document.getElementById('main21'));
+    myChart2.setOption(option21);
     //本月发生事件
 	var myChart3 = echarts.init(document.getElementById('main3'));
     myChart3.setOption(option3);
