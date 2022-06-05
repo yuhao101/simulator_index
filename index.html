@@ -25,6 +25,39 @@
   <script type="text/javascript" src="./static/common.js"></script>
   <script type="text/javascript" src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.119/dist/mapvgl.min.js"></script>
   <script src="//mapv.baidu.com/build/mapv.min.js"></script>
+	<style>
+		arrow.arrow-left {
+
+width: 0;
+
+height: 0;
+
+border-bottom: 15px solid transparent; /* 下边框的高 */
+
+border-top: 15px solid transparent; /* 上方边框的高 */
+
+border-right: 10px solid yellow; /* 右边框的长度|宽度，以及背景色 */
+
+font-size: 0;
+
+line-height: 0;
+
+}
+        .arrow-right {
+
+
+/*border-bottom: 15px solid transparent; !* 下边框的高 *!*/
+
+/*border-top: 15px solid transparent; !* 上方边框的高 *!*/
+
+/*border-left: 60px solid green; !* 左边框的长度|宽度，以及背景色 *!*/
+
+/*font-size: 0;*/
+
+			vertical-align: center;
+
+}
+	</style>
 </head>
 <body class="ksh">
 	<div id="load">
@@ -105,9 +138,18 @@
 				<div class="visual_chart_text">
 					<h1>Travel Service</h1>
 					<h2>Traffic big data analysis platform</h2>
+<!--					<div style="float:left;line-height:85px;color:#20dbfd;text-shadow:0 0 25px-->
+<!--						#00d8ff;font-size:26px;font-family: 'yjsz';text-align:right;">-->
+<!--						<h2>Node trip graph</h2>-->
+<!--					<h2>Car trip graph</h2>-->
+<!--					</div>-->
+
+
 				</div>
+
 				<div class="visual_chart" id="map_container" onclick="window.location.href='./line-trip-time-test.html'">
 				</div>
+
 				<div class="visual_conBot_bot">
 					<div class="visualSssf_left" style="text-align: center; ">
 						<h3 id="time" style="width:33%;float:left;line-height:85px;color:#20dbfd;text-shadow:0 0 25px
@@ -134,17 +176,16 @@
 			</div>
 		</div>
 		<div class="visual_right">
-			<div class="visual_box">
+			<div class="visual_box visualSfzsfl">
 				<div class="visual_title">
-					<span>Order finished status</span>
+					<span>Different line color</span>
 					<img src="images/ksh33.png">
 				</div>
-				<div class="swiper-container visual_swiper1 visual_chart">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide"  id="main3"></div>
-						<div class="swiper-slide"  id="main31"></div>
+				<div class="visual_table" style="float:left;line-height:85px;color:#20dbfd;text-shadow:0 0 25px
+						#00d8ff;font-size:26px;font-family: 'yjsz';text-align:left; cursor:pointer;">
+						<p onclick="window.location.href='./node-trip-time.html'">Node trip graph</p>
+                        <p onclick="window.location.href='./car-line-more.html'">Car trip graph</p>
 					</div>
-				</div>
 			</div>
 			<div class="visual_box visualSfzsfl">
 				<div class="visual_title">
@@ -162,13 +203,13 @@
 			</div>
 			<div class="visual_box">
 				<div class="visual_title">
-					<span>Bridge flow rank</span>
+					<span>Order finished status</span>
 					<img src="images/ksh33.png">
 				</div>
-				<div class="swiper-container visual_swiper2 visual_chart">
+				<div class="swiper-container visual_swiper1 visual_chart">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"  id="main4"></div>
-
+						<div class="swiper-slide"  id="main3"></div>
+						<div class="swiper-slide"  id="main31"></div>
 					</div>
 				</div>
 			</div>
@@ -222,9 +263,7 @@
 		    delay: 5000,//1秒切换一次
 		  },
 	});
-    //收费站收费排行
-	var myChart4 = echarts.init(document.getElementById('main4'));
-    myChart4.setOption(option4);
+
     // var myChart41 = echarts.init(document.getElementById('main41'));
     // myChart41.setOption(option41);
     var mySwiper2 = new Swiper('.visual_swiper2', {

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击按钮切换div</title>
+    <style>
+        /* 加入样式 */
+        #show1 {
+            width: 500px;
+            height: 500px;
+            background-color: red;
+        }
+
+        #show2 {
+            /* 这个display：none一定要写上;不然一开始就会显示show2 */
+            display: none;
+            width: 500px;
+            height: 500px;
+            background-color: blue;
+        }
+        arrow.arrow-left {
+
+width: 0;
+
+height: 0;
+
+border-bottom: 15px solid transparent; /* 下边框的高 */
+
+border-top: 15px solid transparent; /* 上方边框的高 */
+
+border-right: 10px solid yellow; /* 右边框的长度|宽度，以及背景色 */
+
+font-size: 0;
+
+line-height: 0;
+
+}
+        .arrow-right {
+
+width: 0;
+
+height: 0;
+
+border-bottom: 15px solid transparent; /* 下边框的高 */
+
+border-top: 15px solid transparent; /* 上方边框的高 */
+
+border-left: 60px solid green; /* 左边框的长度|宽度，以及背景色 */
+
+font-size: 0;
+
+line-height: 0;
+
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- 给按钮添加一个点击事件 -->
+    <button onclick="btn1()" class="arrow-right">点击1</button>
+    <button onclick="btn2()">点击2</button>
+    <!-- 准备好显示的div 并给一个id -->
+    <div id="show1">
+    </div>
+    <div id="show2">
+    </div>
+
+    <script>
+        function btn1() {
+            // 设置btn1点击之后会发生什么
+            document.getElementById('show1').style.display = 'block';
+            document.getElementById('show2').style.display = 'none';
+        }
+
+        function btn2() {
+            // 这里就是跟btn1一样的意思 点击btn2之后show1会隐藏 同时show2显示
+            document.getElementById('show1').style.display = 'none';
+            document.getElementById('show2').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
+
