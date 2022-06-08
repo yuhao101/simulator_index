@@ -68,7 +68,7 @@
   }).then(rs => {
     rs = rs.data;
     var data = [];
-    var length = 100;
+    var length = 20;
     for (var i = 0; i < length; i++) {
       var traj_list = rs[i].traj_list;
       var traj = [];
@@ -105,7 +105,7 @@
     var carlineLayer = new mapvgl.CarLineLayer({
     url: './static/car.gltf',
     autoPlay: true,
-    step: 0.2,
+    step: 2.3,
     scale: 100,
     });
     view.addLayer(carlineLayer);

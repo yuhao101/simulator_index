@@ -61,6 +61,8 @@ var myData = (function test() {
     }
 })()
 option1 = {
+    animationDuration: 30000,
+
     title: {
         show: true,
         text: data.title,
@@ -203,7 +205,8 @@ option1 = {
 
 //交通工具流量
 option2 = {
-    
+    animationDuration: 10000,
+
     tooltip: {//鼠标指上时的标线
         trigger: 'axis',
         axisPointer: {
@@ -387,6 +390,7 @@ option2 = {
 };
 //////////////////////交通工具流量 end
 option21 = {
+    animationDuration: 10000,
 
     tooltip: {//鼠标指上时的标线
         trigger: 'axis',

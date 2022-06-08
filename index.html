@@ -83,7 +83,7 @@ line-height: 0;
 			</div>
 			<div class="visual_box">
 				<div class="visual_title">
-					<span>Evaluation Matrics</span>
+					<span>Driver Evaluation Metrics</span>
 					<img src="images/ksh33.png">
 				</div>
 				<div class="visual_chart" id="main2">
@@ -92,7 +92,7 @@ line-height: 0;
 			</div>
 			<div class="visual_box">
 				<div class="visual_title">
-					<span>Evaluation Matrics</span>
+					<span>Passenger Evaluation Metrics</span>
 					<img src="images/ksh33.png">
 				</div>
 				<div class="visual_chart" id="main21">
@@ -178,13 +178,20 @@ line-height: 0;
 		<div class="visual_right">
 			<div class="visual_box visualSfzsfl">
 				<div class="visual_title">
-					<span>Different line color</span>
+					<span>Main three maps</span>
 					<img src="images/ksh33.png">
 				</div>
-				<div class="visual_table" style="float:left;line-height:85px;color:#20dbfd;text-shadow:0 0 25px
-						#00d8ff;font-size:26px;font-family: 'yjsz';text-align:left; cursor:pointer;">
-						<p onclick="window.location.href='./node-trip-time.html'">Node trip graph</p>
-                        <p onclick="window.location.href='./car-line-more.html'">Car trip graph</p>
+				<div class="visual_table" style="float:left;line-height:35px;color:#20dbfd;text-shadow:0 0 25px
+						#00d8ff;font-size:16px;font-family: 'yjsz';text-align:left; ">
+						<p onclick="window.location.href='./node-trip-time.html'" style="border-style:solid;height:35px;width:130px;padding-left:3px;cursor:pointer;">Node trip graph</p>
+						<p style="font-size: 16px;color:white">Click to jump to node trip graph</p>
+
+                        <p onclick="window.location.href='./car-line-more.html'" style="border-style:solid;height:35px;width:130px;padding-left:10px;cursor:pointer;">Car trip graph</p>
+                    	<p style="font-size: 16px;color:white">Click to jump to  car trip graph</p>
+
+					 	<p onclick="window.location.href='./line-trip-time-test.html'" style="border-style:solid;height:35px;width:130px;padding-left:9px;cursor:pointer;">Line trip graph</p>
+						<p style="font-size: 16px;color:white">Click to jump to line trip graph</p>
+
 					</div>
 			</div>
 			<div class="visual_box visualSfzsfl">
@@ -196,9 +203,18 @@ line-height: 0;
 					
 				</div>
 				<div class="visual_table">
-						<p style="font-size: 20px;margin:2px; color:yellow; padding: 10px">---- Cruising</p>
-                        <p style="font-size: 20px;margin:2px; color:green; padding: 10px">---- Pickup</p>
-                        <p style="font-size: 20px;margin:2px; color:red; padding: 10px">---- Delivery</p>
+					<div class="visual_table" style="float:left;color:#20dbfd;text-shadow:0 0 25px
+						#00d8ff;font-size:20px;font-family: 'yjsz';text-align:left;top:10px">
+						<p style=" color:yellow;">---- Cruising</p>
+						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers randomly go to nearby areas</p>
+
+                        <p style="margin:2px; color:green; ">---- Pickup</p>
+						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers are on the way to pick up passengers </p>
+
+                        <p style="margin:2px; color:red; ">---- Delivery</p>
+						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers are on the way to delivery passengers</p>
+
+					</div>
 					</div>
 			</div>
 			<div class="visual_box">
@@ -263,7 +279,6 @@ line-height: 0;
 		    delay: 5000,//1秒切换一次
 		  },
 	});
-
     // var myChart41 = echarts.init(document.getElementById('main41'));
     // myChart41.setOption(option41);
     var mySwiper2 = new Swiper('.visual_swiper2', {
@@ -277,26 +292,7 @@ line-height: 0;
 	var myChart5 = echarts.init(document.getElementById('main5'));
 	var myChart6 = echarts.init(document.getElementById('main6'));
 	var myChart7 = echarts.init(document.getElementById('main7'));
-    function sToHms(s){
-      s = Math.floor(s);  //如果输入的是浮点数，则舍弃小数位
 
-      var h = Math.floor(s/3600);  //计算得出小时数
-      if(h<10){  //调整为两位数的格式
-        h = '0'+h;
-      }
-
-      var m = Math.floor(s/60-h*60);  //计算得出分钟数
-      if(m<10){  //调整为两位数的格式
-        m = '0'+m;
-      }
-
-      var s = s%60;  //计算得出剩下的秒数
-      if(s<10){  //调整为两位数的格式
-        s = '0'+s;
-      }
-
-      return h+':'+m+':'+s;  //最后连接成字符串并返回
-    }
 	fetch('./data/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
@@ -333,8 +329,8 @@ line-height: 0;
       for (i = 0; i < 8640; i ++) {
           (function (num) {
               setTimeout(function () {
-                  p5.innerHTML = rs[num * 5 + 36000][0].toFixed(3);
-                  p6.innerHTML = rs[num * 5 + 36000][1].toFixed(3);
+                  p5.innerHTML = rs[num * 5 + 36000][0].toFixed(0)+'s';
+                  p6.innerHTML = sToHms2(rs[num * 5 + 36000][1].toFixed(0));
               }, num * (1000/10));
           })(i);
       }
@@ -380,7 +376,46 @@ line-height: 0;
   var view = new mapvgl.View({
     map: map
   });
+function sToHms(s){
+      s = Math.floor(s);  //如果输入的是浮点数，则舍弃小数位
 
+      var h = Math.floor(s/3600);  //计算得出小时数
+      if(h<10){  //调整为两位数的格式
+        h = '0'+h;
+      }
+
+      var m = Math.floor(s/60-h*60);  //计算得出分钟数
+      if(m<10){  //调整为两位数的格式
+        m = '0'+m;
+      }
+
+      var s = s%60;  //计算得出剩下的秒数
+      if(s<10){  //调整为两位数的格式
+        s = '0'+s;
+      }
+
+      return h+':'+m+':'+s;  //最后连接成字符串并返回
+    }
+    function sToHms2(s){
+      s = Math.floor(s);  //如果输入的是浮点数，则舍弃小数位
+
+      var h = Math.floor(s/3600);  //计算得出小时数
+      if(h<10){  //调整为两位数的格式
+        h = '0'+h;
+      }
+
+      var m = Math.floor(s/60-h*60);  //计算得出分钟数
+      if(m<10){  //调整为两位数的格式
+        m = '0'+m;
+      }
+
+      var s = s%60;  //计算得出剩下的秒数
+      if(s<10){  //调整为两位数的格式
+        s = '0'+s;
+      }
+
+      return m+'mins';  //最后连接成字符串并返回
+    }
   var timeOffset = 36000;
 
   fetch('./data/simulator_animation_1000.json').then(function(rs) {
@@ -437,7 +472,7 @@ line-height: 0;
           }
   }
   var lineLayer = new mapvgl.LineTripLayer({
-    step: 0.3,
+    step: 1.3,
     trailLength: 500,
     startTime: 0,
     endTime: 43200,
