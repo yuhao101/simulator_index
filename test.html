@@ -1,88 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+<template>
+  <div id="lineChart" style="width:850px;height:350px;"></div>
+</template>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>点击按钮切换div</title>
-    <style>
-        /* 加入样式 */
-        #show1 {
-            width: 500px;
-            height: 500px;
-            background-color: red;
-        }
+<script>
+let eCharts = require('echarts/lib/echarts')
+require('echarts/lib/chart/line')
 
-        #show2 {
-            /* 这个display：none一定要写上;不然一开始就会显示show2 */
-            display: none;
-            width: 500px;
-            height: 500px;
-            background-color: blue;
-        }
-        arrow.arrow-left {
-
-width: 0;
-
-height: 0;
-
-border-bottom: 15px solid transparent; /* 下边框的高 */
-
-border-top: 15px solid transparent; /* 上方边框的高 */
-
-border-right: 10px solid yellow; /* 右边框的长度|宽度，以及背景色 */
-
-font-size: 0;
-
-line-height: 0;
-
+export default {
+  name: 'lineChart',
+  mounted () {
+    this.initLineChart()
+  },
+  methods: {
+    initLineChart () {
+      let weatherIcons = {
+        Sunny: 'image://https://echarts.cdn.apache.org/examples/data/asset/img/weather/sunny_128.png',
+        Cloudy: 'image://https://echarts.cdn.apache.org/examples/data/asset/img/weather/cloudy_128.png',
+        Showers: 'image://https://echarts.cdn.apache.org/examples/data/asset/img/weather/showers_128.png'
+      }
+      let myChart = eCharts.init(document.getElementById('lineChart'))
+      myChart.setOption({
+        color: '#000',
+        backgroundColor: '#fff',
+        xAxis: {
+          type: 'category',
+          axisTick: {
+            alignWithLabel: true
+          },
+          data: ['2020.05.01', '2020.05.02', '2020.05.03', '2020.05.04', '2020.05.05', '2020.05.06', '2020.05.07']
+        },
+        yAxis: {
+          type: 'value',
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          },
+          name: '数据折线图',
+          nameGap: 40,
+          nameLocation: 'center',
+          nameTextStyle: {
+            fontSize: 14
+          }
+        },
+        series: [{
+          label: {
+            normal: {
+              show: true,
+              position: 'top'
+            }
+          },
+          data: [
+            {
+              value: 120,
+              symbol: weatherIcons['Showers']
+            }, {
+              value: 360,
+              symbol: weatherIcons['Showers']
+            }, {
+              value: 125,
+              symbol: weatherIcons['Showers']
+            }, {
+              value: 420,
+              symbol: weatherIcons['Showers']
+            }, {
+              value: 316,
+              symbol: weatherIcons['Sunny']
+            }, {
+              value: 200,
+              symbol: weatherIcons['Showers']
+            }, {
+              value: 377,
+              symbol: weatherIcons['Showers']
+            }
+          ],
+          type: 'line',
+          symbolSize: 30,
+          lineStyle: {
+            color: 'rgba(103, 148, 239, 1)'
+          }
+        }]
+      })
+    }
+  }
 }
-        .arrow-right {
-
-width: 0;
-
-height: 0;
-
-border-bottom: 15px solid transparent; /* 下边框的高 */
-
-border-top: 15px solid transparent; /* 上方边框的高 */
-
-border-left: 60px solid green; /* 左边框的长度|宽度，以及背景色 */
-
-font-size: 0;
-
-line-height: 0;
-
-}
-
-    </style>
-</head>
-
-<body>
-    <!-- 给按钮添加一个点击事件 -->
-    <button onclick="btn1()" class="arrow-right">点击1</button>
-    <button onclick="btn2()">点击2</button>
-    <!-- 准备好显示的div 并给一个id -->
-    <div id="show1">
-    </div>
-    <div id="show2">
-    </div>
-
-    <script>
-        function btn1() {
-            // 设置btn1点击之后会发生什么
-            document.getElementById('show1').style.display = 'block';
-            document.getElementById('show2').style.display = 'none';
-        }
-
-        function btn2() {
-            // 这里就是跟btn1一样的意思 点击btn2之后show1会隐藏 同时show2显示
-            document.getElementById('show1').style.display = 'none';
-            document.getElementById('show2').style.display = 'block';
-        }
-    </script>
-</body>
-
-</html>
-
+</script>
