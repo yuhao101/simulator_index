@@ -25,33 +25,46 @@
   <script type="text/javascript" src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.119/dist/mapvgl.min.js"></script>
   <script src="//mapv.baidu.com/build/mapv.min.js"></script>
 	<style>
-		arrow.arrow-left {
+		.arrow.arrow-left {
 
-width: 0;
+			width: 0;
 
-height: 0;
+			height: 0;
 
-border-bottom: 15px solid transparent; /* 下边框的高 */
+			border-bottom: 15px solid transparent; /* 下边框的高 */
 
-border-top: 15px solid transparent; /* 上方边框的高 */
+			border-top: 15px solid transparent; /* 上方边框的高 */
 
-border-right: 10px solid yellow; /* 右边框的长度|宽度，以及背景色 */
+			border-right: 10px solid yellow; /* 右边框的长度|宽度，以及背景色 */
 
-font-size: 0;
+			font-size: 0;
 
-line-height: 0;
+			line-height: 0;
 
-}
+		}
+		.graph{
+			border-style:solid;
+			height:28px;
+			width:130px;
+			cursor:pointer;
+			text-align:center
+
+		}
+		.graphDes{
+			font-size: 16px;
+			color:white;
+			white-space: nowrap;
+		}
         .arrow-right {
 
 
-/*border-bottom: 15px solid transparent; !* 下边框的高 *!*/
+			/*border-bottom: 15px solid transparent; !* 下边框的高 *!*/
 
-/*border-top: 15px solid transparent; !* 上方边框的高 *!*/
+			/*border-top: 15px solid transparent; !* 上方边框的高 *!*/
 
-/*border-left: 60px solid green; !* 左边框的长度|宽度，以及背景色 *!*/
+			/*border-left: 60px solid green; !* 左边框的长度|宽度，以及背景色 *!*/
 
-/*font-size: 0;*/
+			/*font-size: 0;*/
 
 			vertical-align: center;
 
@@ -68,6 +81,8 @@ line-height: 0;
 	<div class="head_top" style="cursor:pointer;">
 		<img class="img-responsive" src="images/jcdsj_logo.png">
 		<p style="font-size: 30px; font-weight: bolder">Manhattan Vehicle Control Big Data System</p>
+			<p style="font-size: 20px; font-weight: bolder; color:white; top: 42px;position:absolute">HKU Smart Mobility Lab (PI: Dr. Jintao Ke)</p>
+
 	</div>
 	<div class="visual">
 		<div class="visual_left">
@@ -182,17 +197,20 @@ line-height: 0;
 					<span>Main three maps</span>
 					<img src="images/ksh33.png">
 				</div>
-				<div class="visual_table" style="float:left;line-height:35px;color:#20dbfd;text-shadow:0 0 25px
-						#00d8ff;font-size:16px;font-family: 'yjsz';text-align:left; ">
-						<p onclick="window.location.href='./node-trip-time.html'" style="border-style:solid;height:35px;width:130px;padding-left:3px;cursor:pointer;">Node trip graph</p>
-						<p style="font-size: 16px;color:white">Click to jump to node trip graph</p>
+				<div class="visual_table" style="float:left;line-height:28px;color:#20dbfd;text-shadow:0 0 25px
+						#00d8ff;font-size:15px;font-family: 'yjsz';text-align:left; ">
+					<div class="graph">
+						<p onclick="window.location.href='./node-trip-time.html'">vehicle movement</p>
+						<p class="graphDes">Click to jump to vehicle movement</p>
 
-                        <p onclick="window.location.href='./car-line-more.html'" style="border-style:solid;height:35px;width:130px;padding-left:10px;cursor:pointer;">Car trip graph</p>
-                    	<p style="font-size: 16px;color:white">Click to jump to  car trip graph</p>
+                        <p class="graph" onclick="window.location.href='./car-line-more.html'" >car map</p>
+                    	<p class="graphDes">Click to jump to  car map</p>
 
-					 	<p onclick="window.location.href='./line-trip-time-test.html'" style="border-style:solid;height:35px;width:130px;padding-left:9px;cursor:pointer;">Line trip graph</p>
-						<p style="font-size: 16px;color:white">Click to jump to line trip graph</p>
-
+					 	<p class="graph" onclick="window.location.href='./line-trip-time-test.html'" >trajectory map</p>
+						<p class="graphDes">Click to jump to trajectory map</p>
+						<p class="graph" onclick="window.location.href='./od.html'" >od demand map</p>
+						<p class="graphDes">Click to jump to od demand map</p>
+						</div>
 					</div>
 			</div>
 			<div class="visual_box visualSfzsfl">
@@ -207,7 +225,7 @@ line-height: 0;
 					<div class="visual_table" style="float:left;color:#20dbfd;text-shadow:0 0 25px
 						#00d8ff;font-size:20px;font-family: 'yjsz';text-align:left;top:10px">
 						<p style=" color:yellow;">---- Cruising</p>
-						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers randomly go to nearby areas</p>
+						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers cruise and search passengers</p>
 
                         <p style="margin:2px; color:green; ">---- Pickup</p>
 						<p style="font-size: 16px;color:white;white-space: nowrap;">Drivers are on the way to pick up passengers </p>
@@ -424,6 +442,7 @@ function sToHms(s){
   }).then(function(rs) {
     rs = rs.data;
     var data = [];
+    var max_time = 0;
     // var length = 1000;
     for (var i = 0; i < rs.length; i++) {
       var type = rs[i].type;
@@ -433,6 +452,7 @@ function sToHms(s){
       var timeArr = [];
 
       for (var j = 0; j < time_list.length; j++) {
+      	max_time = Math.max(max_time, time_list[j]- timeOffset);
         timeArr.push(time_list[j]);
         traj.push([
           traj_list[j][1],
@@ -476,7 +496,7 @@ function sToHms(s){
     step: 1.3,
     trailLength: 500,
     startTime: 0,
-    endTime: 43200,
+    endTime: max_time,
   });
   view.addLayer(lineLayer);
   lineLayer.setData(data);
