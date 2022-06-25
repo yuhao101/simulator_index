@@ -129,7 +129,7 @@
     tilt: 60,
     heading: 0,
     // center: [116.308528,40.050574],
-    center: [-73.982316, 40.7730913],
+    center: [114.1694, 22.3193],
     // center: [106.521831,29.571811],
     zoom: 16,
     // style: whiteStyle,
@@ -167,7 +167,7 @@ var deliveryLayer = new mapvgl.CarLineLayer({
     step: 2.3,
     scale: 20,
     });
-  fetch('./data/simulator_animation_1000.json').then(rs => {
+  fetch('./hongkong/simulator_animation_1000.json').then(rs => {
     return rs.json();
   }).then(rs => {
     rs = rs.data;
@@ -182,9 +182,15 @@ var deliveryLayer = new mapvgl.CarLineLayer({
       var judge = new Set();
 
       for (var j = 0; j < traj_list.length; j++) {
+        node_point = [traj_list[j][1],traj_list[j][0]];
+        var bd_point = gcoord.transform(
+                node_point,    // 经纬度坐标
+                gcoord.WGS84,                 // 当前坐标系
+                gcoord.BD09                   // 目标坐标系
+            );
         traj.push([
-          traj_list[j][1],
-          traj_list[j][0],
+          bd_point[0],
+          bd_point[1],
         ]);
         judge.add(traj_list[j][0])
       }
@@ -256,7 +262,7 @@ var executeTime = 70;
 
       return h+':'+m+':'+s;  //最后连接成字符串并返回
     }
-  fetch('./data/simulator_metrics.json').then(function(rs) {
+  fetch('./hongkong/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       cTime = document.getElementById('time');
@@ -269,15 +275,15 @@ var executeTime = 70;
               setTimeout(function () {
                   current_time = num * 5 + 36000;
                   cTime.innerHTML = 'Time: ' + sToHms(num * 5 + 36000);
-                  p1.innerHTML = 'Matching Rate: ' + rs[num * 5 + 36000][0].toFixed(3);
-                  p2.innerHTML = 'Pickup Ratio: ' + rs[num * 5 + 36000][1];
-                  p3.innerHTML = 'Delivery Ratio: ' + rs[num * 5 + 36000][2];
-                  p4.innerHTML = 'Idle Ratio: ' + rs[num * 5 + 36000][3];
+                  p1.innerHTML = 'Matching Rate: ' + (rs[num * 5 + 36000][0]*100).toFixed(2) +'%';
+                  p2.innerHTML = 'Pickup Ratio: ' + (rs[num * 5 + 36000][3]*100).toFixed(2) +'%';
+                  p3.innerHTML = 'Delivery Ratio: ' + (rs[num * 5 + 36000][4]*100).toFixed(2) +'%';
+                  p4.innerHTML = 'Idle Ratio: ' + (rs[num * 5 + 36000][5]*100).toFixed(2) +'%';
               }, num * (1000/(8640/executeTime)));
           })(i);
       }
   });
-  fetch('./data/simulator_metrics_passenger.json').then(function(rs) {
+  fetch('./hongkong/simulator_metrics_passenger.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       p5 = document.getElementById('passenger waiting time');
@@ -285,8 +291,8 @@ var executeTime = 70;
       for (i = 0; i < 8640; i ++) {
           (function (num) {
               setTimeout(function () {
-                  p5.innerHTML = 'Passenger waiting time: ' + rs[num * 5 + 36000][0].toFixed(3);
-                  p6.innerHTML = 'Passenger pickup time: ' + rs[num * 5 + 36000][1].toFixed(3);
+                  p5.innerHTML = 'Passenger waiting time: ' + rs[num * 5 + 36000][0].toFixed(2);
+                  p6.innerHTML = 'Passenger pickup time: ' + rs[num * 5 + 36000][1].toFixed(2);
               }, num * (1000/(8640/executeTime)));
           })(i);
       }

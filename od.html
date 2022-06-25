@@ -41,7 +41,7 @@
     var map = initMap({
         tilt: 41.8,
         heading: 0,
-        center: [-73.952316, 40.7530913],
+        center: [114.1694, 22.3193],
         zoom: 13,
         style: purpleStyle
     });
@@ -69,15 +69,25 @@ var view = new mapvgl.View({
     return rs.json();
     }).then(function(rs) {
         console.log(rs.length);
-        for (var i = 0; i <10000; i++) {
+        for (var i = 0; i <1000; i++) {
             var single_order = rs[i];
             // var startPoint = map.lnglatToMercator(single_order[0][1], single_order[0][0]);
             // var endPoint = map.lnglatToMercator(single_order[1][1], single_order[1][0]);
             var startPoint = [single_order[0][1], single_order[0][0]];
             var endPoint = [single_order[1][1], single_order[1][0]];
+            var start1 = gcoord.transform(
+                startPoint,    // 经纬度坐标
+                gcoord.WGS84,                 // 当前坐标系
+                gcoord.BD09                   // 目标坐标系
+            );
+                var end1 = gcoord.transform(
+                endPoint,    // 经纬度坐标
+                gcoord.WGS84,                 // 当前坐标系
+                gcoord.BD09                   // 目标坐标系
+            );
             curve.setOptions({
-                start: [startPoint[0], startPoint[1]],
-                end: [endPoint[0], endPoint[1]]
+                start: start1,
+                end: end1
 
             });
             var curveModelData = curve.getPoints(60);
@@ -91,6 +101,7 @@ var view = new mapvgl.View({
                 }
             });
         }
+
     var lineLayer = new mapvgl.LineTripLayer({
         color: 'rgb(255, 255, 204)', // 飞线动画颜色
         step: 0.3

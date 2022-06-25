@@ -1,43 +1,9 @@
-import folium
 import os
 from tqdm import tqdm
-from folium import plugins
 import pickle
 import json
 import csv
 import sys
-
-
-def draw_gps(locations_true, output_path, file_name):
-    """
-    绘制gps轨迹图
-    :param locations: list, 需要绘制轨迹的经纬度信息，格式为[[lat1, lon1], [lat2, lon2], ...]
-    :param output_path: str, 轨迹图保存路径
-    :param file_name: str, 轨迹图保存文件名
-    :return: None
-    """
-    m = folium.Map(locations_true[0][0], zoom_start=30, attr='default')  # 中心区域的确定
-    for single_route in locations_true:
-
-        lc = folium.PolyLine(  # polyline方法为将坐标用实线形式连接起来
-            single_route,  # 将坐标点连接起来
-            weight=4,  # 线的大小为4
-            color='red',  # 线的颜色为红色
-            opacity=0.8,  # 线的透明度
-        ).add_to(m)  # 将这条线添加到刚才的区域m内
-
-        # attr = {"fill": "#007DEF", "font-weight": "bold", "font-size": "20"}
-        # plugins.PolyLineTextPath(
-        #     lc, "--> **", repeat=True, offset=5, attributes=attr
-        # ).add_to(m)
-        plugins.AntPath(
-            locations=single_route, reverse=False, dash_array=[20, 30]
-        ).add_to(m)
-
-        folium.Marker(single_route[0], popup='<b>Starting Point</b>').add_to(m)
-        folium.Marker(single_route[-1], popup='<b>End Point</b>').add_to(m)
-
-    m.save(os.path.join(output_path, file_name))  # 将结果以HTML形式保存到指定路径
 
 
 def generate_route_lat_lng(route_file, node_file):
@@ -363,7 +329,7 @@ def calculate_metrics_passenger(record_path):
 
 def generate_od_data():
     order_pair = []
-    order = pickle.load(open('./data/order.pickle', 'rb'))
+    order = pickle.load(open('./hongkong/order.pickle', 'rb'))
     for i in range(36000, 79200):
         if i in order.keys():
             for single_order in order[i]:
@@ -371,8 +337,49 @@ def generate_od_data():
                 end_point = (single_order[5], single_order[6])
                 order_pair.append([start_point, end_point])
 
-    file = open('./data/order_pair.json', 'w')
+    file = open('./hongkong/order_pair.json', 'w')
     file.write(json.dumps(order_pair, indent=1))
+
+
+def generate_panel_data():
+    metrics = json.load(open('./hongkong/simulator_metrics.json'))
+    hour_metrics = dict()
+    for t in range(36000, 79200, 5):
+        hour = int(t/3600)
+        values = metrics[str(t)]
+        if hour not in hour_metrics.keys():
+            hour_metrics[hour] = [0] * 8
+            for j in range(6):
+                hour_metrics[hour][j] += values[j]
+        else:
+            for j in range(6):
+                hour_metrics[hour][j] += values[j]
+    new_metrics = json.load(open('./hongkong/simulator_metrics_passenger.json'))
+    for t in range(36000, 79200, 5):
+        hour = int(t / 3600)
+        values = new_metrics[str(t)]
+        for j in range(6, 8):
+            hour_metrics[hour][j] += values[j-6]
+    print(hour_metrics)
+
+    for t in hour_metrics.keys():
+        hour_metrics[t][0] = hour_metrics[t][0]/720
+        hour_metrics[t][3] = hour_metrics[t][3]/720
+        hour_metrics[t][4] = hour_metrics[t][4]/720
+        hour_metrics[t][5] = hour_metrics[t][5]/720
+        hour_metrics[t][6] = hour_metrics[t][6]/720
+        hour_metrics[t][7] = hour_metrics[t][7]/720
+        hour_metrics[t][1] = metrics[str((t+1)*3600-5)][1]
+        hour_metrics[t][2] = metrics[str((t+1)*3600-5)][2]
+    print(hour_metrics)
+    result = []
+    for i in range(8):
+        temp_result = []
+        for value in hour_metrics.values():
+            temp_result.append(value[i])
+        result.append(temp_result)
+    print(result)
+    json.dump(result, open('./hongkong/panel.json', 'w'), indent=1)
 
 
 if __name__ == '__main__':
@@ -384,9 +391,10 @@ if __name__ == '__main__':
         # calculate_metrics(record_path+file)
         # extract_one_driver_record(record_path+file)
         # calculate_metrics_passenger(record_path+file)
-    generate_od_data()
+    # generate_od_data()
     # generate_driver_heatmap()
     # generate_order_heatmap()
     # record_path = './data/record/records_driver_num_2000_cruising.pickle'
     # generate_order_info_by_records(record_path)
+    generate_panel_data()
 

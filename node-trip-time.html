@@ -103,6 +103,7 @@
 
     <div id="map"></div>
     <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="//api.map.baidu.com/api?v=1.0&type=webgl&ak=Zyq6TjFQ1679hxUWSUhud4i03GThAEGI"></script>
 
     <script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
@@ -114,7 +115,7 @@
         var map = new BMap.Map("map", {
             enableMapClick: false
         });    // 创建Map实例
-        map.centerAndZoom(new BMap.Point(-73.943316, 40.7830913), 13);  // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMap.Point(114.1694, 22.3193), 13);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
 
         // 地图自定义样式
@@ -257,7 +258,7 @@
             }]
         });
 
-        $.get('./data/simulator_animation_1000.json', function (rs) {
+        $.get('./hongkong/simulator_animation_1000.json', function (rs) {
 
             var timeData = [];
             var time_base = 36000;
@@ -268,13 +269,20 @@
                 var traj = rs[i].traj_list;
                 var coordinates = [];
                 for (j = 0; j < time.length; j += 1) {
-                    coordinates.push([traj[j][1], traj[j][0]]);
+                    node_point = [traj[j][1],traj[j][0]];
+                    var bd_point = gcoord.transform(
+                            node_point,    // 经纬度坐标
+                            gcoord.WGS84,                 // 当前坐标系
+                            gcoord.BD09                   // 目标坐标系
+                        );
+
+                    coordinates.push([bd_point[0], bd_point[1]]);
                     if(rs[i].type === 1.0){
                         timeData.push({
                         fillStyle: 'red',
                         geometry: {
                             type: 'Point',
-                            coordinates: [traj[j][1], traj[j][0]]
+                            coordinates: [bd_point[0], bd_point[1]]
                         },
                         count: 1,
                         time: time[j] - time_base
@@ -285,7 +293,7 @@
                             fillStyle: 'green',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [traj[j][1], traj[j][0]]
+                                coordinates: [bd_point[0], bd_point[1]]
                             },
                             count: 1,
                             time: time[j] - time_base
@@ -296,7 +304,7 @@
                             fillStyle: 'yellow',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [traj[j][1], traj[j][0]]
+                                coordinates: [bd_point[0], bd_point[1]]
                             },
                             count: 1,
                             time: time[j] - time_base
@@ -340,7 +348,7 @@
 
       return h+':'+m+':'+s;  //最后连接成字符串并返回
     }
-  fetch('./data/simulator_metrics.json').then(function(rs) {
+  fetch('./hongkong/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       cTime = document.getElementById('time');
@@ -352,15 +360,15 @@
           (function (num) {
               setTimeout(function () {
                   cTime.innerHTML = 'Time: ' + sToHms(num * 5 + 36000);
-                  p1.innerHTML = 'Matching Rate: ' + rs[num * 5 + 36000][0];
-                  p2.innerHTML = 'Pickup Ratio: ' + rs[num * 5 + 36000][1];
-                  p3.innerHTML = 'Delivery Ratio: ' + rs[num * 5 + 36000][2];
-                  p4.innerHTML = 'Idle Ratio: ' + rs[num * 5 + 36000][3];
+                  p1.innerHTML = 'Matching Rate: ' + (rs[num * 5 + 36000][0]*100).toFixed(2) +'%';
+                  p2.innerHTML = 'Pickup Ratio: ' + (rs[num * 5 + 36000][3]*100).toFixed(2) +'%';
+                  p3.innerHTML = 'Delivery Ratio: ' + (rs[num * 5 + 36000][4]*100).toFixed(2) +'%';
+                  p4.innerHTML = 'Idle Ratio: ' + (rs[num * 5 + 36000][5]*100).toFixed(2) +'%';
               }, num * (1000/(8640/executeTime)));
           })(i);
       }
   });
-  fetch('./data/simulator_metrics_passenger.json').then(function(rs) {
+  fetch('./hongkong/simulator_metrics_passenger.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       p5 = document.getElementById('passenger waiting time');
@@ -368,8 +376,8 @@
       for (i = 0; i < 8640; i ++) {
           (function (num) {
               setTimeout(function () {
-                  p5.innerHTML = 'Passenger waiting time: ' + rs[num * 5 + 36000][0].toFixed(3);
-                  p6.innerHTML = 'Passenger pickup time: ' + rs[num * 5 + 36000][1].toFixed(3);
+                  p5.innerHTML = 'Passenger waiting time: ' + rs[num * 5 + 36000][0].toFixed(2);
+                  p6.innerHTML = 'Passenger pickup time: ' + rs[num * 5 + 36000][1].toFixed(2);
               }, num * (1000/(8640/executeTime)));
           })(i);
       }
