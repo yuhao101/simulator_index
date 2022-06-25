@@ -269,20 +269,13 @@
                 var traj = rs[i].traj_list;
                 var coordinates = [];
                 for (j = 0; j < time.length; j += 1) {
-                    node_point = [traj[j][1],traj[j][0]];
-                    var bd_point = gcoord.transform(
-                            node_point,    // 经纬度坐标
-                            gcoord.WGS84,                 // 当前坐标系
-                            gcoord.BD09                   // 目标坐标系
-                        );
-
-                    coordinates.push([bd_point[0], bd_point[1]]);
+                    coordinates.push([traj_list[j][1],traj_list[j][0]]);
                     if(rs[i].type === 1.0){
                         timeData.push({
                         fillStyle: 'red',
                         geometry: {
                             type: 'Point',
-                            coordinates: [bd_point[0], bd_point[1]]
+                            coordinates: [traj_list[j][1],traj_list[j][0]]
                         },
                         count: 1,
                         time: time[j] - time_base
@@ -293,7 +286,7 @@
                             fillStyle: 'green',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [bd_point[0], bd_point[1]]
+                                coordinates: [traj_list[j][1],traj_list[j][0]]
                             },
                             count: 1,
                             time: time[j] - time_base
@@ -304,7 +297,7 @@
                             fillStyle: 'yellow',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [bd_point[0], bd_point[1]]
+                                coordinates: [traj_list[j][1],traj_list[j][0]]
                             },
                             count: 1,
                             time: time[j] - time_base

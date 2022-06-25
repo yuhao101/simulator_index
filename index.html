@@ -449,15 +449,9 @@ function sToHms(s){
       for (var j = 0; j < time_list.length; j++) {
       	max_time = Math.max(max_time, time_list[j]- timeOffset);
         timeArr.push(time_list[j]);
-        node_point = [traj_list[j][1],traj_list[j][0]];
-        var bd_point = gcoord.transform(
-                node_point,    // 经纬度坐标
-                gcoord.WGS84,                 // 当前坐标系
-                gcoord.BD09                   // 目标坐标系
-            );
         traj.push([
-          bd_point[0],
-          bd_point[1],
+          traj_list[j][1],
+		  traj_list[j][0],
           1,
           time_list[j]- timeOffset
         ]);

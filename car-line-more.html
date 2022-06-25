@@ -182,15 +182,9 @@ var deliveryLayer = new mapvgl.CarLineLayer({
       var judge = new Set();
 
       for (var j = 0; j < traj_list.length; j++) {
-        node_point = [traj_list[j][1],traj_list[j][0]];
-        var bd_point = gcoord.transform(
-                node_point,    // 经纬度坐标
-                gcoord.WGS84,                 // 当前坐标系
-                gcoord.BD09                   // 目标坐标系
-            );
         traj.push([
-          bd_point[0],
-          bd_point[1],
+          traj_list[j][1],
+		  traj_list[j][0],
         ]);
         judge.add(traj_list[j][0])
       }

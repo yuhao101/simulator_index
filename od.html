@@ -75,19 +75,9 @@ var view = new mapvgl.View({
             // var endPoint = map.lnglatToMercator(single_order[1][1], single_order[1][0]);
             var startPoint = [single_order[0][1], single_order[0][0]];
             var endPoint = [single_order[1][1], single_order[1][0]];
-            var start1 = gcoord.transform(
-                startPoint,    // 经纬度坐标
-                gcoord.WGS84,                 // 当前坐标系
-                gcoord.BD09                   // 目标坐标系
-            );
-                var end1 = gcoord.transform(
-                endPoint,    // 经纬度坐标
-                gcoord.WGS84,                 // 当前坐标系
-                gcoord.BD09                   // 目标坐标系
-            );
             curve.setOptions({
-                start: start1,
-                end: end1
+                start: startPoint,
+                end: endPoint
 
             });
             var curveModelData = curve.getPoints(60);
