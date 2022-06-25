@@ -256,7 +256,7 @@ var executeTime = 70;
 
       return h+':'+m+':'+s;  //最后连接成字符串并返回
     }
-  fetch('./hongkong/simulator_metrics.json').then(function(rs) {
+  fetch('./data/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       cTime = document.getElementById('time');
@@ -277,7 +277,7 @@ var executeTime = 70;
           })(i);
       }
   });
-  fetch('./hongkong/simulator_metrics_passenger.json').then(function(rs) {
+  fetch('./data/simulator_metrics_passenger.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       p5 = document.getElementById('passenger waiting time');

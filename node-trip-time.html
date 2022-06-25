@@ -258,7 +258,7 @@
             }]
         });
 
-        $.get('./hongkong/simulator_animation_1000.json', function (rs) {
+        $.get('./data/simulator_animation_1000.json', function (rs) {
 
             var timeData = [];
             var time_base = 36000;
@@ -341,7 +341,7 @@
 
       return h+':'+m+':'+s;  //最后连接成字符串并返回
     }
-  fetch('./hongkong/simulator_metrics.json').then(function(rs) {
+  fetch('./data/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       cTime = document.getElementById('time');
@@ -361,7 +361,7 @@
           })(i);
       }
   });
-  fetch('./hongkong/simulator_metrics_passenger.json').then(function(rs) {
+  fetch('./data/simulator_metrics_passenger.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       p5 = document.getElementById('passenger waiting time');

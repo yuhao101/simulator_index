@@ -299,7 +299,7 @@
 	var myChart6 = echarts.init(document.getElementById('main6'));
 	var myChart7 = echarts.init(document.getElementById('main7'));
 
-	fetch('./hongkong/simulator_metrics.json').then(function(rs) {
+	fetch('./data/simulator_metrics.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       cTime = document.getElementById('time');
@@ -313,7 +313,6 @@
                   var value3 = rs[num * 5 + 36000][4];
                   var value4 = rs[num * 5 + 36000][5];
                 cTime.innerHTML = 'Time: ' + sToHms(num * 5 + 36000);
-                console.log(i);
                 if(num%10 == 0){
                 	p7.innerHTML = rs[num * 5 + 36000][2];
 					p8.innerHTML = rs[num * 5 + 36000][1];
@@ -335,7 +334,7 @@
           })(i);
       }
   });
-    fetch('./hongkong/simulator_metrics_passenger.json').then(function(rs) {
+    fetch('./data/simulator_metrics_passenger.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
       p5 = document.getElementById('passenger waiting time');
