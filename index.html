@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Hong Kong Taxi Control Big Data System</title>
+<title>Manhattan Taxi Control Big Data System</title>
 <!--设置是否为缩放模式 -->
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" /><!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" type="text/css" href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.css">
@@ -85,7 +85,7 @@
 	</div>
 	<div class="head_top" style="cursor:pointer;">
 		<img class="img-responsive" src="images/jcdsj_logo.png">
-		<p style="font-size: 30px; font-weight: bolder">Hong Kong Taxi Control Big Data System</p>
+		<p style="font-size: 30px; font-weight: bolder">Manhattan Taxi Control Big Data System</p>
 			<p style="font-size: 20px; font-weight: bolder; color:white; top: 110%;position:absolute">Mobility Lab (PI: Dr. Jintao Ke)</p>
 
 	</div>
@@ -373,7 +373,7 @@
           tilt: 60,
           heading: 0,
           // center: [-73.982316, 40.7730913],
-          center: [114.1694, 22.3193],
+          center: [-73.972316, 40.7430913],
           zoom: 14,
           style: darkStyle,
           displayOptions: {
@@ -432,7 +432,7 @@ function sToHms(s){
     }
   var timeOffset = 36000;
 
-  fetch('./data/simulator_animation.json').then(function(rs) {
+  fetch('./data/simulator_animation_1000.json').then(function(rs) {
     return rs.json();
   }).then(function(rs) {
     rs = rs.data;
