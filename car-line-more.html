@@ -167,7 +167,7 @@ var deliveryLayer = new mapvgl.CarLineLayer({
     step: 2.3,
     scale: 20,
     });
-  fetch('./hongkong/simulator_animation_1000.json').then(rs => {
+  fetch('./data/simulator_animation_1000.json').then(rs => {
     return rs.json();
   }).then(rs => {
     rs = rs.data;

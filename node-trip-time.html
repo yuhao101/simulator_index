@@ -269,13 +269,13 @@
                 var traj = rs[i].traj_list;
                 var coordinates = [];
                 for (j = 0; j < time.length; j += 1) {
-                    coordinates.push([traj_list[j][1],traj_list[j][0]]);
+                    coordinates.push([traj[j][1],traj[j][0]]);
                     if(rs[i].type === 1.0){
                         timeData.push({
                         fillStyle: 'red',
                         geometry: {
                             type: 'Point',
-                            coordinates: [traj_list[j][1],traj_list[j][0]]
+                            coordinates: [traj[j][1],traj[j][0]]
                         },
                         count: 1,
                         time: time[j] - time_base
@@ -286,7 +286,7 @@
                             fillStyle: 'green',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [traj_list[j][1],traj_list[j][0]]
+                                coordinates: [traj[j][1],traj[j][0]]
                             },
                             count: 1,
                             time: time[j] - time_base
@@ -297,7 +297,7 @@
                             fillStyle: 'yellow',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [traj_list[j][1],traj_list[j][0]]
+                                coordinates: [traj[j][1],traj[j][0]]
                             },
                             count: 1,
                             time: time[j] - time_base
