@@ -55,11 +55,20 @@ html, body, form{overflow-y:auto;height:100%;}
 .visual{height:calc(100% - 33px);padding-top:10px;}
 
 .visual_box{height:33.3%;}
+.visual_box_long{height:40%;}
+.visual_box_short{height:26.7%;}
 .visual_box .visual_title{position:relative;height:35px;margin:5px 0;font-weight:bolder;}
 .visual_box .visual_title span{color:#fff;font-size:18px;line-height:35px;}
 .visual_box .visual_title img{width:100%;position:absolute;left:0;bottom:0;}
 .visual_box .visual_chart{height:calc(100% - 35px);}
-
+.visual_box_long .visual_title{position:relative;height:35px;margin:5px 0;font-weight:bolder;}
+.visual_box_long .visual_title span{color:#fff;font-size:18px;line-height:35px;}
+.visual_box_long .visual_title img{width:100%;position:absolute;left:0;bottom:0;}
+.visual_box_long .visual_chart{height:calc(100% - 35px);}
+.visual_box_short .visual_title{position:relative;height:35px;margin:5px 0;font-weight:bolder;}
+.visual_box_short .visual_title span{color:#fff;font-size:18px;line-height:35px;}
+.visual_box_short .visual_title img{width:100%;position:absolute;left:0;bottom:0;}
+.visual_box_short .visual_chart{height:calc(100% - 35px);}
 .visual_left{width:25%;height:100%;float:left;}
 .visual_left .sfzcll{position:relative;}
 .visual_left .sfzcll a{width:32%;text-align:center;line-height:25px;color:#fff;display:inline-block;}
